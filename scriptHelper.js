@@ -14,6 +14,15 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
                 </ol>
                 <img src="">
    */
+            `<h2>Mission Destination</h2>
+            <ol>
+                <li>Name: ${json.name}</li>
+                <li>Diameter: ${json.diameter}</li>
+                <li>Star: ${json.star}</li>
+                <li>Distance from Earth: ${json.distance}</li>
+                <li>Number of Moons: ${json.moons}</li>
+            </ol>
+            <img src="${json.image}">`
 }
 
 function validateInput(testInput) {
@@ -41,14 +50,7 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
    else{
     launchStatus = true;
    }
-   if(validateInput(copilot) != 'Is not a number'){
-    document.getElementByID("faultyItems").styles.visibility='visible';
-    window.alert("Invalid input (or lack of input) has been provided for the copilot's name.");
-    launchStatus = false;
-   }
-   else{
-    launchStatus = true;
-   }
+
    if(validateInput(fuelLevel) != 'Is a number'){
     document.getElementByID("faultyItems").styles.visibility='visible';
     window.alert("Invalid input (or lack of input) has been provided for the fuel amount.");
@@ -101,17 +103,7 @@ async function myFetch() {
     planetsReturned = await fetch('https://handlers.education.launchcode.org/static/planets.json').then( function(response) {
         response.json().then(function(json){
             const planet = document.getElementById("missionTarget");
-            planet.innerHTML = 
-
-            `<h2>Mission Destination</h2>
-            <ol>
-                <li>Name: ${json.name}</li>
-                <li>Diameter: ${json.diameter}</li>
-                <li>Star: ${json.star}</li>
-                <li>Distance from Earth: ${json.distance}</li>
-                <li>Number of Moons: ${json.moons}</li>
-            </ol>
-            <img src="${json.image}">`
+            planet.innerHTML = addDestinationInfo(document, json.name, json.diamter, json.star, json.distance, json.moons, json.image)
             });
         });
 
